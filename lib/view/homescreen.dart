@@ -3,54 +3,16 @@
 import 'package:apidemo/model/datamodel.dart';
 import 'package:apidemo/view/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../controller/apicall.dart';
-//import 'controller/apicall.dart';
+import '../controller/datafetchprovider.dart';
 
-// void main() {
-//   runApp(const MyApp());
-// }
 
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       theme: ThemeData(
-//         // This is the theme of your application.
-//         //
-//         // Try runn
-
-class MyHomePage extends StatefulWidget {
- // const MyHomePage({Key? key, required this.title}) : super(key: key);
-const MyHomePage({Key? key}) : super(key: key);
-//   // This widget is the home page of your application. It is stateful, meaning
-//   // that it has a State object (defined below) that contains fields that affect
-//   // how it looks.
-
-//   // This class is the configuration for the state. It holds the values (in this
-//   // case the title) provided by the parent (in this case the App widget) and
-//   // used by the build method of the State. Fields in a Widget subclass are
-//   // always marked "final".
-
-//   final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePage extends StatelessWidget {
 
 late Future<List> fetchData;
-@override
-  void initState() {
-   fetchData=fetchDataFromApi();
-  //  fetchData.whenComplete(() => fetchData.then((value) => print(value.toString())));
-    super.initState();
-  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -63,6 +25,7 @@ late Future<List> fetchData;
             //backgroundColor: Colors.white,
             leading: IconButton(
               onPressed: () {
+
               
               },
               icon: const Icon(
@@ -72,7 +35,7 @@ late Future<List> fetchData;
             ),
           ),
        body: FutureBuilder<List>(
-        future: fetchData,
+        future: context.read<DataFetchProvider>().data,
       builder: (ctx, snapshot) {
        
          
@@ -93,10 +56,13 @@ late Future<List> fetchData;
                 itemBuilder: ((context, index) {
                   return GestureDetector(
                     onTap: () {
+                      context.read<DataFetchProvider>().setIndex(index: index,context: context);
+
+
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>  ProfileData(index: index)));
+                              builder: (context) =>  ProfileData()));
                     },
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -124,7 +90,7 @@ late Future<List> fetchData;
                               SizedBox(
                                   
                         
-                                  child: Text(snapshot.data![index].name,
+                                  child: Text(snapshot.data![index].name ?? 'null',
                                     maxLines: 2,
                                     
                                     overflow: TextOverflow.ellipsis,
