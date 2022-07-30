@@ -96,7 +96,7 @@ late Future<List> fetchData;
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ProfileData()));
+                              builder: (context) =>  ProfileData(index: index)));
                     },
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -140,7 +140,14 @@ late Future<List> fetchData;
         );
       }
       else{
-       return Text("hjh");
+       return Container(
+                      margin: const EdgeInsets.only(bottom: 80.0),
+                      child: const Center(
+                        child: CircularProgressIndicator(
+                            backgroundColor: Colors.blue,
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.red)),
+                      ));;
       }
       
       },
