@@ -305,7 +305,8 @@ class _ProfileDataState extends State<ProfileData> {
                             
                             
 
-                          }),
+                          }
+                          ),
                         )
                         
                         ],
