@@ -37,6 +37,7 @@ dependencies:
   http:
   
   maps_launcher: ^2.0.1
+  provider: ^6.0.3
   
 
 dev_dependencies:
